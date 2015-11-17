@@ -10,6 +10,19 @@ let mask = topAndBottomGradient(inputImage.size, clearLocations: [0.35, 0.65], i
 
 let blurred = inputImage.applyBlurWithRadius(3, maskImage: mask)
 
+var result: Int?
 
+let calculateSum = NSBlockOperation(block: {
+  result = 2 + 3
+  sleep(5)
+})
+
+result
+
+let startTime = NSDate()
+calculateSum.start()
+NSDate().timeIntervalSinceDate(startTime)
+
+result
 
 
