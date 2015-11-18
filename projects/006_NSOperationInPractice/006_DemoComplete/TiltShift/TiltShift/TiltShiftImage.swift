@@ -30,14 +30,15 @@ struct TiltShiftImage {
 extension TiltShiftImage {
   static func loadDefaultData() -> [TiltShiftImage] {
     return [
-      TiltShiftImage(imageName: "sample_01", title: "Camels"),
-      TiltShiftImage(imageName: "sample_02", title: "Desert Camp"),
-      TiltShiftImage(imageName: "sample_03", title: "Sky Train at Night"),
-      TiltShiftImage(imageName: "sample_04", title: "Sky Train at Dusk"),
-      TiltShiftImage(imageName: "sample_05", title: "Cityscape"),
-      TiltShiftImage(imageName: "sample_06", title: "Daytime Sky Train"),
-      TiltShiftImage(imageName: "sample_07", title: "Golden Arches"),
-      TiltShiftImage(imageName: "sample_08", title: "Aeroplane"),
+      TiltShiftImage(imageName: "sample_01.jpg", title: "Camels"),
+      TiltShiftImage(imageName: "sample_02.jpg", title: "Desert Camp"),
+      TiltShiftImage(imageName: "sample_03.jpg", title: "Sky Train at Night"),
+      TiltShiftImage(imageName: "sample_04.jpg", title: "Sky Train at Dusk"),
+      TiltShiftImage(imageName: "sample_05.jpg", title: "Cityscape"),
+      TiltShiftImage(imageName: "sample_06.jpg", title: "Daytime Sky Train"),
+      TiltShiftImage(imageName: "sample_07.jpg", title: "Golden Arches"),
+      TiltShiftImage(imageName: "sample_08.jpg", title: "Aeroplane"),
+      TiltShiftImage(imageName: "sample_09.jpg", title: "Traffic at Night")
     ]
   }
 }
