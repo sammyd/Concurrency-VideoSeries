@@ -1,4 +1,5 @@
 import Compressor
+import UIKit
 //: # Compressor Operation
 //: You've decided that you want to use some funky new compression algorithm to store the images in your app. Unfortunately this compression algorithm isn't natively supported by `UIImage`, so you need to use your own custom Decompressor.
 //:
