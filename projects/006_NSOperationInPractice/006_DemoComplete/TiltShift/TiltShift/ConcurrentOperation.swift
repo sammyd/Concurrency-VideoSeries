@@ -22,18 +22,53 @@
 
 import Foundation
 
-public struct Compressor {
-  public static func loadCompressedFile(path: String) -> NSData? {
-    return NSData(contentsOfArchive: path, compression: .LZMA)
-  }
-  
-  public static func decompressData(data: NSData) -> NSData? {
-    return data.uncompressedDataUsingCompression(.LZMA)
-  }
-  
-  public static func saveDataAsCompressedFile(data: NSData, path: String) -> Bool {
-    guard let compressedData = data.compressedDataUsingCompression(.LZMA) else { return false
+class ConcurrentOperation: NSOperation {
+  enum State: String {
+    case Ready, Executing, Finished
+    
+    private var keyPath: String {
+      return "is" + rawValue
     }
-    return compressedData.writeToFile(path, atomically: true)
   }
-} 
+  
+  var state = State.Ready {
+    willSet {
+      willChangeValueForKey(newValue.keyPath)
+      willChangeValueForKey(state.keyPath)
+    }
+    didSet {
+      didChangeValueForKey(oldValue.keyPath)
+      didChangeValueForKey(state.keyPath)
+    }
+  }
+}
+
+
+extension ConcurrentOperation {
+  //: NSOperation Overrides
+  override var ready: Bool {
+    return super.ready && state == .Ready
+  }
+  
+  override var executing: Bool {
+    return state == .Executing
+  }
+  
+  override var finished: Bool {
+    return state == .Finished
+  }
+  
+  override var asynchronous: Bool {
+    return true
+  }
+  
+  override func start() {
+    if cancelled {
+      state = .Finished
+      return
+    }
+    
+    main()
+    state = .Executing
+  }
+}

@@ -20,20 +20,25 @@
 * THE SOFTWARE.
 */
 
-import Foundation
+import UIKit
 
-public struct Compressor {
-  public static func loadCompressedFile(path: String) -> NSData? {
-    return NSData(contentsOfArchive: path, compression: .LZMA)
+class ImageDecompressionOperation: NSOperation {
+  private let inputData: NSData
+  private let completion: (UIImage?) -> ()
+  
+  init(data: NSData, completion: (UIImage?) -> ()) {
+    inputData = data
+    self.completion = completion
+    super.init()
   }
   
-  public static func decompressData(data: NSData) -> NSData? {
-    return data.uncompressedDataUsingCompression(.LZMA)
-  }
-  
-  public static func saveDataAsCompressedFile(data: NSData, path: String) -> Bool {
-    guard let compressedData = data.compressedDataUsingCompression(.LZMA) else { return false
+  override func main() {
+    var returnImage: UIImage?
+    
+    if let decompressedData = Compressor.decompressData(inputData) {
+      returnImage = UIImage(data: decompressedData)
     }
-    return compressedData.writeToFile(path, atomically: true)
+    
+    completion(returnImage)
   }
-} 
+}

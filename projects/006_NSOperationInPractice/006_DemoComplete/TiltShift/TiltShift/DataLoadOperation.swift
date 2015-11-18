@@ -22,18 +22,22 @@
 
 import Foundation
 
-public struct Compressor {
-  public static func loadCompressedFile(path: String) -> NSData? {
-    return NSData(contentsOfArchive: path, compression: .LZMA)
+class DataLoadOperation: ConcurrentOperation {
+  
+  private var url: NSURL
+  private var completion: (NSData?) -> ()
+  
+  init(url: NSURL, completion: (NSData?) -> ()) {
+    self.url = url
+    self.completion = completion
+    super.init()
   }
   
-  public static func decompressData(data: NSData) -> NSData? {
-    return data.uncompressedDataUsingCompression(.LZMA)
-  }
-  
-  public static func saveDataAsCompressedFile(data: NSData, path: String) -> Bool {
-    guard let compressedData = data.compressedDataUsingCompression(.LZMA) else { return false
+  override func main() {
+    NetworkSimulator.asyncLoadDataAtURL(url) {
+      data in
+      self.completion(data)
+      self.state = .Finished
     }
-    return compressedData.writeToFile(path, atomically: true)
   }
-} 
+}
