@@ -21,3 +21,21 @@
 */
 
 import Foundation
+
+struct NetworkSimulator {
+  static func asyncLoadDataAtURL(url: NSURL, completion: ((data: NSData?) -> ())) {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+      let data = syncLoadDataAtURL(url)
+      dispatch_async(dispatch_get_main_queue()) {
+        completion(data: data)
+      }
+    }
+  }
+  
+  static func syncLoadDataAtURL(url: NSURL) -> NSData? {
+    // Wait somewhere between 0 and 3 seconds
+    let randomWaitingTime = arc4random_uniform(3 * 1000000)
+    usleep(randomWaitingTime)
+    return NSData(contentsOfURL: url)
+  }
+}
