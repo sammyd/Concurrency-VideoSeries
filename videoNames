@@ -2,7 +2,7 @@ NSOperation
 NSOperationQueue
 Dependencies
 CancellingOperations
-MonitoringProgress
+AsyncOperations
 NSOperationInPractice
 FireAndForgetWithGCD
 GCDRelatedTasks
