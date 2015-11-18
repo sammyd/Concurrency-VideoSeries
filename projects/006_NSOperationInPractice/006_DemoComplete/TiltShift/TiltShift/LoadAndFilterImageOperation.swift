@@ -22,21 +22,44 @@
 
 import UIKit
 
-public class TiltShiftOperation : NSOperation {
+class LoadAndFilterImageOperation: NSOperation {
+  let imageName: String
+  let completion: (UIImage?) -> ()
   
-  private let inputImage: UIImage?
-  private let completion: ((UIImage?) -> ())
-  
-  public init(image: UIImage?, completion: ((UIImage?) -> ())) {
-    inputImage = image
+  init(imageName: String, completion: (UIImage?) -> ()) {
+    self.imageName = imageName
     self.completion = completion
     super.init()
   }
   
-  override public func main() {
-    guard let inputImage = inputImage else { return }
-    let mask = topAndBottomGradient(inputImage.size)
-    let outputImage = inputImage.applyBlurWithRadius(4, maskImage: mask)
-    completion(outputImage)
+  override func main() {
+    guard let url = NSBundle.mainBundle().URLForResource(imageName, withExtension: "") else { return }
+    
+    // Create temporary buffers for operation results
+    var dataBuffer: NSData?
+    var imageBuffer: UIImage?
+    
+    // Create the separate operations
+    let dataLoad = DataLoadOperation(url: url) {
+      uncompressedData in
+      dataBuffer = uncompressedData
+    }
+    
+    let imageDecompress = ImageDecompressionOperation(data: dataBuffer) {
+      image in
+      imageBuffer = image
+    }
+    
+    let tiltShift = TiltShiftOperation(image: imageBuffer) {
+      image in
+      self.completion(image)
+    }
+    
+    // Add operation dependencies
+    imageDecompress.addDependency(dataLoad)
+    tiltShift.addDependency(imageDecompress)
+    
+    NSOperationQueue.currentQueue()?.addOperations([dataLoad, imageDecompress, tiltShift], waitUntilFinished: true)
+    
   }
 }

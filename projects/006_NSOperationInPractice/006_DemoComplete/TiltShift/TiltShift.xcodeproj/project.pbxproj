@@ -22,6 +22,7 @@
 		22E6E6441BFC4C8500815B9E /* DataLoadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E6E6431BFC4C8500815B9E /* DataLoadOperation.swift */; };
 		22E6E6461BFC4DA600815B9E /* ConcurrentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E6E6451BFC4DA600815B9E /* ConcurrentOperation.swift */; };
 		22E6E6491BFC534900815B9E /* ImageDecompressionOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E6E6481BFC534900815B9E /* ImageDecompressionOperation.swift */; };
+		22E6E64B1BFC573B00815B9E /* LoadAndFilterImageOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E6E64A1BFC573B00815B9E /* LoadAndFilterImageOperation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		22E6E6431BFC4C8500815B9E /* DataLoadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataLoadOperation.swift; sourceTree = "<group>"; };
 		22E6E6451BFC4DA600815B9E /* ConcurrentOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcurrentOperation.swift; sourceTree = "<group>"; };
 		22E6E6481BFC534900815B9E /* ImageDecompressionOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDecompressionOperation.swift; sourceTree = "<group>"; };
+		22E6E64A1BFC573B00815B9E /* LoadAndFilterImageOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadAndFilterImageOperation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				22E6E63C1BFC25D400815B9E /* TiltShiftOperation.swift */,
 				22E6E6431BFC4C8500815B9E /* DataLoadOperation.swift */,
 				22E6E6481BFC534900815B9E /* ImageDecompressionOperation.swift */,
+				22E6E64A1BFC573B00815B9E /* LoadAndFilterImageOperation.swift */,
 			);
 			name = Operations;
 			sourceTree = "<group>";
@@ -229,6 +232,7 @@
 				22E6E6401BFC25D400815B9E /* UIImageExtensions.swift in Sources */,
 				22E6E6491BFC534900815B9E /* ImageDecompressionOperation.swift in Sources */,
 				22E6E6421BFC262E00815B9E /* NetworkSimulator.swift in Sources */,
+				22E6E64B1BFC573B00815B9E /* LoadAndFilterImageOperation.swift in Sources */,
 				22E6E6371BFC258C00815B9E /* Compressor.swift in Sources */,
 				22E6E63F1BFC25D400815B9E /* TiltShiftOperation.swift in Sources */,
 				22E6E61E1BFC233F00815B9E /* AppDelegate.swift in Sources */,

@@ -24,16 +24,18 @@ import UIKit
 
 class ImageDecompressionOperation: NSOperation {
   
-  private let inputData: NSData
+  private let inputData: NSData?
   private let completion: (UIImage?) -> ()
   
-  init(data: NSData, completion: (UIImage?) -> ()) {
+  init(data: NSData?, completion: (UIImage?) -> ()) {
     inputData = data
     self.completion = completion
     super.init()
   }
   
   override func main() {
+    guard let inputData = inputData else { return }
+    
     var returnImage: UIImage?
     
     if let decompressedData = Compressor.decompressData(inputData) {
