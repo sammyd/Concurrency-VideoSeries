@@ -25,6 +25,7 @@ import UIKit
 class TiltShiftTableViewController: UITableViewController {
   
   let imageList = TiltShiftImage.loadDefaultData()
+  let imageCellOperationQueue = NSOperationQueue()
   
   // MARK: - Table view data source
   override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -39,7 +40,8 @@ class TiltShiftTableViewController: UITableViewController {
     let cell = tableView.dequeueReusableCellWithIdentifier("TiltShiftCell", forIndexPath: indexPath)
     
     if let cell = cell as? ImageTableViewCell {
-      
+      cell.imageLoadQueue = imageCellOperationQueue
+      cell.tiltShiftImage = imageList[indexPath.row]
     }
   
     return cell

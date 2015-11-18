@@ -33,24 +33,13 @@ class LoadAndFilterImageOperation: NSOperation {
   }
   
   override func main() {
-    guard let url = NSBundle.mainBundle().URLForResource(imageName, withExtension: "") else { return }
     
-    // Create temporary buffers for operation results
-    var dataBuffer: NSData?
-    var imageBuffer: UIImage?
+    guard let url = NSBundle.mainBundle().URLForResource(imageName, withExtension: "compressed") else { return }
     
     // Create the separate operations
-    let dataLoad = DataLoadOperation(url: url) {
-      uncompressedData in
-      dataBuffer = uncompressedData
-    }
-    
-    let imageDecompress = ImageDecompressionOperation(data: dataBuffer) {
-      image in
-      imageBuffer = image
-    }
-    
-    let tiltShift = TiltShiftOperation(image: imageBuffer) {
+    let dataLoad = DataLoadOperation(url: url)
+    let imageDecompress = ImageDecompressionOperation(data: nil)
+    let tiltShift = TiltShiftOperation(image: nil) {
       image in
       self.completion(image)
     }

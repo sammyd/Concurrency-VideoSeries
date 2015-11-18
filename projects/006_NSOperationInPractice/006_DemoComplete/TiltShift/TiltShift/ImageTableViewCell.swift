@@ -23,7 +23,8 @@
 import UIKit
 
 class ImageTableViewCell: UITableViewCell {
-  static let imageLoadQueue = NSOperationQueue()
+  
+  var imageLoadQueue: NSOperationQueue?
   
   var tiltShiftImage: TiltShiftImage? {
     didSet {
@@ -43,11 +44,14 @@ class ImageTableViewCell: UITableViewCell {
   
   private func loadImage(tsImage: TiltShiftImage) {
     imageLoadOperation?.cancel()
-    imageLoadOperation = LoadAndFilterImageOperation(imageName: tsImage.imageName) {
+    let loadOp = LoadAndFilterImageOperation(imageName: tsImage.imageName) {
       image in
       NSOperationQueue.mainQueue().addOperationWithBlock {
         self.tsImageView.image = image
       }
     }
+    imageLoadOperation = loadOp
+    
+    imageLoadQueue?.addOperation(loadOp)
   }
 }

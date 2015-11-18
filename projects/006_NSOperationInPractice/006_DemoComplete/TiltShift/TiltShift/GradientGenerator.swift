@@ -22,7 +22,7 @@
 
 import UIKit
 
-public func topAndBottomGradient(size: CGSize, clearLocations: [CGFloat] = [0.35, 0.65], innerIntensity: CGFloat = 0.5) -> UIImage {
+public func topAndBottomGradient(size: CGSize, clearLocations: [CGFloat] = [0.4, 0.6], innerIntensity: CGFloat = 0.5) -> UIImage {
   
   let context = CGBitmapContextCreate(nil, Int(size.width), Int(size.height), 8, 0, CGColorSpaceCreateDeviceGray(), CGImageAlphaInfo.None.rawValue)
   

@@ -22,26 +22,44 @@
 
 import UIKit
 
+protocol ImageDecompressionOperationDataProvider {
+  var compressedData: NSData? { get }
+}
+
 class ImageDecompressionOperation: NSOperation {
   
   private let inputData: NSData?
-  private let completion: (UIImage?) -> ()
+  private let completion: ((UIImage?) -> ())?
+  private var outputImage: UIImage?
   
-  init(data: NSData?, completion: (UIImage?) -> ()) {
+  init(data: NSData?, completion: ((UIImage?) -> ())? = nil) {
     inputData = data
     self.completion = completion
     super.init()
   }
   
   override func main() {
-    guard let inputData = inputData else { return }
-    
-    var returnImage: UIImage?
-    
-    if let decompressedData = Compressor.decompressData(inputData) {
-      returnImage = UIImage(data: decompressedData)
+    let compressedData: NSData?
+    if let inputData = inputData {
+      compressedData = inputData
+    } else {
+      let dataProvider = dependencies
+        .filter { $0 is ImageDecompressionOperationDataProvider }
+        .first as? ImageDecompressionOperationDataProvider
+      compressedData = dataProvider?.compressedData
     }
     
-    completion(returnImage)
+    guard let data = compressedData else { return }
+    
+    if let decompressedData = Compressor.decompressData(data) {
+      outputImage = UIImage(data: decompressedData)
+    }
+    
+    completion?(outputImage)
   }
 }
+
+extension ImageDecompressionOperation: ImageFilterDataProvider {
+  var image: UIImage? { return outputImage }
+}
+

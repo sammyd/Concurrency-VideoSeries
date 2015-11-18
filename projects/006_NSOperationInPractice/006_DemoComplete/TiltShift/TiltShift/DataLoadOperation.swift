@@ -25,9 +25,10 @@ import Foundation
 class DataLoadOperation: ConcurrentOperation {
   
   private let url: NSURL
-  private let completion: (NSData?) -> ()
+  private let completion: ((NSData?) -> ())?
+  private var loadedData: NSData?
   
-  init(url: NSURL, completion: (NSData?) -> ()) {
+  init(url: NSURL, completion: ((NSData?) -> ())? = nil) {
     self.url = url
     self.completion = completion
     super.init()
@@ -36,8 +37,13 @@ class DataLoadOperation: ConcurrentOperation {
   override func main() {
     NetworkSimulator.asyncLoadDataAtURL(url) {
       data in
-      self.completion(data)
+      self.loadedData = data
+      self.completion?(data)
       self.state = .Finished
     }
   }
+}
+
+extension DataLoadOperation: ImageDecompressionOperationDataProvider {
+  var compressedData: NSData? { return loadedData }
 }

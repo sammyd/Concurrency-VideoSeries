@@ -22,6 +22,10 @@
 
 import UIKit
 
+protocol ImageFilterDataProvider {
+  var image: UIImage? { get }
+}
+
 public class TiltShiftOperation : NSOperation {
   
   private let inputImage: UIImage?
@@ -34,9 +38,19 @@ public class TiltShiftOperation : NSOperation {
   }
   
   override public func main() {
-    guard let inputImage = inputImage else { return }
-    let mask = topAndBottomGradient(inputImage.size)
-    let outputImage = inputImage.applyBlurWithRadius(4, maskImage: mask)
+    var image: UIImage?
+    if let inputImage = inputImage {
+      image = inputImage
+    } else if let dataProvider = dependencies
+      .filter({ $0 is ImageFilterDataProvider })
+      .first as? ImageFilterDataProvider {
+      image = dataProvider.image
+    }
+    
+    guard let inImage = image else { return }
+    
+    let mask = topAndBottomGradient(inImage.size)
+    let outputImage = inImage.applyBlurWithRadius(16, maskImage: mask)
     completion(outputImage)
   }
 }
