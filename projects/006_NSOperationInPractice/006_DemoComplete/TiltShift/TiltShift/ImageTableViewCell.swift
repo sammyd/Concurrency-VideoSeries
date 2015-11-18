@@ -24,42 +24,20 @@ import UIKit
 
 class ImageTableViewCell: UITableViewCell {
   
-  var imageLoadQueue: NSOperationQueue?
-  
   var tiltShiftImage: TiltShiftImage? {
     didSet {
       if let tiltShiftImage = tiltShiftImage {
         titleLabel.text = tiltShiftImage.title
-        loadImage(tiltShiftImage)
+        updateImageViewWithImage(nil)
       }
     }
   }
-  private var imageLoadOperation: LoadAndFilterImageOperation?
   
   @IBOutlet weak var tsImageView: UIImageView!
   @IBOutlet weak var titleLabel: UILabel!
   @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
   
-  override func prepareForReuse() {
-    imageLoadOperation?.cancel()
-    self.setImage(nil)
-  }
-  
-  private func loadImage(tsImage: TiltShiftImage) {
-    setImage(nil)
-    imageLoadOperation?.cancel()
-    let loadOp = LoadAndFilterImageOperation(imageName: tsImage.imageName) {
-      image in
-      NSOperationQueue.mainQueue().addOperationWithBlock {
-        self.setImage(image)
-      }
-    }
-    imageLoadOperation = loadOp
-    
-    imageLoadQueue?.addOperation(loadOp)
-  }
-  
-  private func setImage(image: UIImage?) {
+  func updateImageViewWithImage(image: UIImage?) {
     if let image = image {
       tsImageView.image = image
       tsImageView.alpha = 0

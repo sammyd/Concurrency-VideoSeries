@@ -42,3 +42,9 @@ extension TiltShiftImage {
     ]
   }
 }
+
+extension TiltShiftImage: Equatable { }
+
+func ==(lhs: TiltShiftImage, rhs: TiltShiftImage) -> Bool {
+  return lhs.imageName == rhs.imageName && lhs.title == rhs.title
+}

@@ -20,42 +20,49 @@
 * THE SOFTWARE.
 */
 
-import Foundation
+import UIKit
 
-class GroupOperation: ConcurrentOperation {
+class TiltShiftImageProvider {
   
   private let operationQueue = NSOperationQueue()
-  private let firstOperation = NSBlockOperation(block: {})
-  private let finalOperation = NSBlockOperation(block: {})
+  let tiltShiftImage: TiltShiftImage
   
-  init(operations: [NSOperation]) {
-    super.init()
+  init(tiltShiftImage: TiltShiftImage, completion: (UIImage?) -> ()) {
+    self.tiltShiftImage = tiltShiftImage
     
-    operationQueue.suspended = true
-    for operation in operations {
-      addOperation(operation)
+    let url = NSBundle.mainBundle().URLForResource(tiltShiftImage.imageName, withExtension: "compressed")!
+    
+    // Create the separate operations
+    let dataLoad = DataLoadOperation(url: url)
+    let imageDecompress = ImageDecompressionOperation(data: nil)
+    let tiltShift = TiltShiftOperation(image: nil) {
+      image in
+      NSOperationQueue.mainQueue().addOperationWithBlock {
+        completion(image)
+      }
     }
-    finalOperation.addExecutionBlock {
-      [weak self] in
-      self?.state = .Finished
-    }
-    operationQueue.addOperation(firstOperation)
-    operationQueue.addOperation(finalOperation)
+    
+    let operations = [dataLoad, imageDecompress, tiltShift]
+    
+    // Add operation dependencies
+    imageDecompress.addDependency(dataLoad)
+    tiltShift.addDependency(imageDecompress)
+    
+    operationQueue.addOperations(operations, waitUntilFinished: false)
   }
   
-  private func addOperation(operation: NSOperation) {
-    operation.addDependency(firstOperation)
-    finalOperation.addDependency(operation)
-    operationQueue.addOperation(operation)
-  }
-  
-  override func cancel() {
+  func cancel() {
     operationQueue.cancelAllOperations()
-    super.cancel()
   }
-  
-  override func main() {
-    operationQueue.suspended = false
-  }
-  
 }
+
+extension TiltShiftImageProvider: Hashable {
+  var hashValue: Int {
+    return (tiltShiftImage.title + tiltShiftImage.imageName).hashValue
+  }
+}
+
+func ==(lhs: TiltShiftImageProvider, rhs: TiltShiftImageProvider) -> Bool {
+  return lhs.tiltShiftImage == rhs.tiltShiftImage
+}
+
