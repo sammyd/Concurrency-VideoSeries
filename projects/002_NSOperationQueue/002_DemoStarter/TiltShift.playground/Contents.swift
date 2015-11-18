@@ -1,64 +1,51 @@
 import UIKit
-//: # NSOperation
-//: NSOperation represents a 'unit of work' and can be constructed in a few ways.
-//: ## NSBlockOperation
-//: NSBlockOperation allows you to create an NSOperation from one or more closures.
+import XCPlayground
 
-var result: Int?
+XCPlaygroundPage.currentPage.needsIndefiniteExecution = true
+//: # NSOperationQueue
+//: NSOperationQueue is responsible for scheduling and running a set of operations, somewhere in the background. 
 
-//: Creating an NSBlockOperation to add two numbers
-let summationOperation = NSBlockOperation(block: {
-  result = 2 + 3
-  sleep(5)
-})
+//: To prevent the playground from killing background tasks when the main thread has completed, need to specify indefinite execution
+XCPlaygroundPage.currentPage.needsIndefiniteExecution = true
 
+
+//: ## Creating a queue
+//: Operations can be added to queues directly as closures
+let printerQueue = NSOperationQueue()
+printerQueue.maxConcurrentOperationCount = 2
 startClock()
-summationOperation.start()
+printerQueue.addOperationWithBlock { sleep(5); print("hello") }
+printerQueue.addOperationWithBlock { sleep(5); print("my") }
+printerQueue.addOperationWithBlock { sleep(5); print("name") }
+printerQueue.addOperationWithBlock { sleep(5); print("is") }
+printerQueue.addOperationWithBlock { sleep(5); print("sam") }
 stopClock()
 
-result
-
-//: NSBlockOperations can have multiple blocks, that run concurrently
-
-let multiPrinter = NSBlockOperation()
-
-multiPrinter.addExecutionBlock({ print("Hello"); sleep(5) })
-multiPrinter.addExecutionBlock({ print("my"); sleep(5) })
-multiPrinter.addExecutionBlock({ print("name"); sleep(5) })
-multiPrinter.addExecutionBlock({ print("is"); sleep(5) })
-multiPrinter.addExecutionBlock({ print("Sam"); sleep(5) })
-
 startClock()
-multiPrinter.start()
+printerQueue.waitUntilAllOperationsAreFinished()
 stopClock()
 
 
-//: ## Subclassing NSOperation
-//: Allows you more control over precisely what the operation is doing
-let inputImage = UIImage(named: "dark_road_small.jpg")
+//: ## Adding NSOperations to queues
+let images = ["city", "dark_road", "train_day", "train_dusk", "train_night"].map { UIImage(named: "\($0).jpg") }
+var filteredImages = [UIImage]()
 
-//: Creating an operation to add tilt-shift blur to an image
+//: Create the queue with the default constructor
+let filterQueue = NSOperationQueue()
 
-class TiltShiftOperation : NSOperation {
-  var inputImage: UIImage?
-  var outputImage: UIImage?
-  
-  override func main() {
-    guard let inputImage = inputImage else { return }
-    let mask = topAndBottomGradient(inputImage.size)
-    outputImage = inputImage.applyBlurWithRadius(4, maskImage: mask)
+//: Create a filter operations for each of the iamges, adding a completionBlock
+for image in images {
+  let filterOp = TiltShiftOperation()
+  filterOp.inputImage = image
+  filterOp.completionBlock = {
+    guard let output = filterOp.outputImage else { return }
+    filteredImages.append(output)
   }
+  filterQueue.addOperation(filterOp)
 }
 
-let tsOp = TiltShiftOperation()
-tsOp.inputImage = inputImage
+//: Need to wait for the queue to finish before checking the results
+filterQueue.waitUntilAllOperationsAreFinished()
 
-startClock()
-tsOp.start()
-stopClock()
-
-tsOp.outputImage
-
-
-
-
+//: Inspect the filtered images
+filteredImages
