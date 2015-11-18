@@ -24,8 +24,8 @@ import Foundation
 
 class DataLoadOperation: ConcurrentOperation {
   
-  private var url: NSURL
-  private var completion: (NSData?) -> ()
+  private let url: NSURL
+  private let completion: (NSData?) -> ()
   
   init(url: NSURL, completion: (NSData?) -> ()) {
     self.url = url

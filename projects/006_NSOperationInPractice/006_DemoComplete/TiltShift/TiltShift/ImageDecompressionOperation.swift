@@ -23,6 +23,7 @@
 import UIKit
 
 class ImageDecompressionOperation: NSOperation {
+  
   private let inputData: NSData
   private let completion: (UIImage?) -> ()
   

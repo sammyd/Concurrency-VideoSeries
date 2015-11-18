@@ -24,14 +24,14 @@ import UIKit
 
 public class TiltShiftOperation : NSOperation {
   
+  private let inputImage: UIImage
+  private let completion: ((UIImage?) -> ())
+  
   public init(image: UIImage, completion: ((UIImage?) -> ())) {
     inputImage = image
     self.completion = completion
     super.init()
   }
-  
-  private var inputImage: UIImage
-  private var completion: ((UIImage?) -> ())
   
   override public func main() {
     let mask = topAndBottomGradient(inputImage.size)
