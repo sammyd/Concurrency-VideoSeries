@@ -29,6 +29,7 @@ class ImageTableViewCell: UITableViewCell {
   var tiltShiftImage: TiltShiftImage? {
     didSet {
       if let tiltShiftImage = tiltShiftImage {
+        titleLabel.text = tiltShiftImage.title
         loadImage(tiltShiftImage)
       }
     }
@@ -40,6 +41,7 @@ class ImageTableViewCell: UITableViewCell {
   
   override func prepareForReuse() {
     imageLoadOperation?.cancel()
+    tsImageView.image = nil
   }
   
   private func loadImage(tsImage: TiltShiftImage) {

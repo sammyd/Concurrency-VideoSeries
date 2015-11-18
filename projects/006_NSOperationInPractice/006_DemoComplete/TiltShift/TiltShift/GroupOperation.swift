@@ -22,57 +22,40 @@
 
 import Foundation
 
-class ConcurrentOperation: NSOperation {
-  enum State: String {
-    case Ready, Executing, Finished
+class GroupOperation: ConcurrentOperation {
+  
+  private let operationQueue = NSOperationQueue()
+  private let firstOperation = NSBlockOperation(block: {})
+  private let finalOperation = NSBlockOperation(block: {})
+  
+  init(operations: [NSOperation]) {
+    super.init()
     
-    private var keyPath: String {
-      return "is" + rawValue
+    operationQueue.suspended = true
+    for operation in operations {
+      addOperation(operation)
     }
-  }
-  
-  var state = State.Ready {
-    willSet {
-      willChangeValueForKey(newValue.keyPath)
-      willChangeValueForKey(state.keyPath)
+    finalOperation.addExecutionBlock {
+      [weak self] in
+      self?.state = .Finished
     }
-    didSet {
-      didChangeValueForKey(oldValue.keyPath)
-      didChangeValueForKey(state.keyPath)
-    }
-  }
-}
-
-
-extension ConcurrentOperation {
-  //: NSOperation Overrides
-  override var ready: Bool {
-    return super.ready && state == .Ready
+    operationQueue.addOperation(firstOperation)
+    operationQueue.addOperation(finalOperation)
   }
   
-  override var executing: Bool {
-    return state == .Executing
-  }
-  
-  override var finished: Bool {
-    return state == .Finished
-  }
-  
-  override var asynchronous: Bool {
-    return true
-  }
-  
-  override func start() {
-    if cancelled {
-      state = .Finished
-      return
-    }
-    
-    main()
-    state = .Executing
+  private func addOperation(operation: NSOperation) {
+    operation.addDependency(firstOperation)
+    finalOperation.addDependency(operation)
+    operationQueue.addOperation(operation)
   }
   
   override func cancel() {
-    state = .Finished
+    operationQueue.cancelAllOperations()
+    super.cancel()
   }
+  
+  override func main() {
+    operationQueue.suspended = false
+  }
+  
 }

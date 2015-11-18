@@ -22,33 +22,26 @@
 
 import UIKit
 
-class LoadAndFilterImageOperation: NSOperation {
-  let imageName: String
-  let completion: (UIImage?) -> ()
-  
+class LoadAndFilterImageOperation: GroupOperation {
   init(imageName: String, completion: (UIImage?) -> ()) {
-    self.imageName = imageName
-    self.completion = completion
-    super.init()
-  }
-  
-  override func main() {
-    
-    guard let url = NSBundle.mainBundle().URLForResource(imageName, withExtension: "compressed") else { return }
+
+    let url = NSBundle.mainBundle().URLForResource(imageName, withExtension: "compressed")!
     
     // Create the separate operations
     let dataLoad = DataLoadOperation(url: url)
     let imageDecompress = ImageDecompressionOperation(data: nil)
     let tiltShift = TiltShiftOperation(image: nil) {
       image in
-      self.completion(image)
+      completion(image)
     }
+    
+    let operations = [dataLoad, imageDecompress, tiltShift]
     
     // Add operation dependencies
     imageDecompress.addDependency(dataLoad)
     tiltShift.addDependency(imageDecompress)
     
-    NSOperationQueue.currentQueue()?.addOperations([dataLoad, imageDecompress, tiltShift], waitUntilFinished: true)
-    
+    super.init(operations: operations)
   }
+
 }

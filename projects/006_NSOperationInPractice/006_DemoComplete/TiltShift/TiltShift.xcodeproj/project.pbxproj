@@ -34,6 +34,7 @@
 		22E6E6911BFC8FB800815B9E /* sample_07.compressed in Resources */ = {isa = PBXBuildFile; fileRef = 22E6E6881BFC8FB800815B9E /* sample_07.compressed */; };
 		22E6E6921BFC8FB800815B9E /* sample_08.compressed in Resources */ = {isa = PBXBuildFile; fileRef = 22E6E6891BFC8FB800815B9E /* sample_08.compressed */; };
 		22E6E6931BFC8FB800815B9E /* sample_09.compressed in Resources */ = {isa = PBXBuildFile; fileRef = 22E6E68A1BFC8FB800815B9E /* sample_09.compressed */; };
+		22E6E6951BFCB57A00815B9E /* GroupOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E6E6941BFCB57A00815B9E /* GroupOperation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +67,7 @@
 		22E6E6881BFC8FB800815B9E /* sample_07.compressed */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_07.compressed; sourceTree = "<group>"; };
 		22E6E6891BFC8FB800815B9E /* sample_08.compressed */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_08.compressed; sourceTree = "<group>"; };
 		22E6E68A1BFC8FB800815B9E /* sample_09.compressed */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_09.compressed; sourceTree = "<group>"; };
+		22E6E6941BFCB57A00815B9E /* GroupOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupOperation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				22E6E6451BFC4DA600815B9E /* ConcurrentOperation.swift */,
+				22E6E6941BFCB57A00815B9E /* GroupOperation.swift */,
 			);
 			name = Abstract;
 			sourceTree = "<group>";
@@ -319,6 +322,7 @@
 				22E6E6461BFC4DA600815B9E /* ConcurrentOperation.swift in Sources */,
 				22E6E63E1BFC25D400815B9E /* GradientGenerator.swift in Sources */,
 				22E6E6401BFC25D400815B9E /* UIImageExtensions.swift in Sources */,
+				22E6E6951BFCB57A00815B9E /* GroupOperation.swift in Sources */,
 				22E6E6491BFC534900815B9E /* ImageDecompressionOperation.swift in Sources */,
 				22E6E6581BFC600E00815B9E /* TiltShiftTableViewController.swift in Sources */,
 				22E6E6421BFC262E00815B9E /* NetworkSimulator.swift in Sources */,

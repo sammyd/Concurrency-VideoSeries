@@ -51,6 +51,8 @@ public class TiltShiftOperation : NSOperation {
     
     let mask = topAndBottomGradient(inImage.size)
     let outputImage = inImage.applyBlurWithRadius(16, maskImage: mask)
-    completion(outputImage)
+    if(!cancelled) {
+      completion(outputImage)
+    }
   }
 }
