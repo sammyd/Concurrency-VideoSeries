@@ -12,6 +12,13 @@
 		22E6E6231BFC233F00815B9E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22E6E6211BFC233F00815B9E /* Main.storyboard */; };
 		22E6E6251BFC233F00815B9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22E6E6241BFC233F00815B9E /* Assets.xcassets */; };
 		22E6E6281BFC233F00815B9E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22E6E6261BFC233F00815B9E /* LaunchScreen.storyboard */; };
+		22E6E6361BFC258C00815B9E /* libcompression.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 22E6E6331BFC258C00815B9E /* libcompression.tbd */; };
+		22E6E6371BFC258C00815B9E /* Compressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E6E6341BFC258C00815B9E /* Compressor.swift */; };
+		22E6E6381BFC258C00815B9E /* NSData+Compression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E6E6351BFC258C00815B9E /* NSData+Compression.swift */; };
+		22E6E63E1BFC25D400815B9E /* GradientGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E6E63B1BFC25D400815B9E /* GradientGenerator.swift */; };
+		22E6E63F1BFC25D400815B9E /* TiltShiftOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E6E63C1BFC25D400815B9E /* TiltShiftOperation.swift */; };
+		22E6E6401BFC25D400815B9E /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E6E63D1BFC25D400815B9E /* UIImageExtensions.swift */; };
+		22E6E6421BFC262E00815B9E /* NetworkSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E6E6411BFC262E00815B9E /* NetworkSimulator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +29,13 @@
 		22E6E6241BFC233F00815B9E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		22E6E6271BFC233F00815B9E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		22E6E6291BFC233F00815B9E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		22E6E6331BFC258C00815B9E /* libcompression.tbd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.text-based-dylib-definition"; path = libcompression.tbd; sourceTree = "<group>"; };
+		22E6E6341BFC258C00815B9E /* Compressor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Compressor.swift; sourceTree = "<group>"; };
+		22E6E6351BFC258C00815B9E /* NSData+Compression.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+Compression.swift"; sourceTree = "<group>"; };
+		22E6E63B1BFC25D400815B9E /* GradientGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientGenerator.swift; sourceTree = "<group>"; };
+		22E6E63C1BFC25D400815B9E /* TiltShiftOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TiltShiftOperation.swift; sourceTree = "<group>"; };
+		22E6E63D1BFC25D400815B9E /* UIImageExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
+		22E6E6411BFC262E00815B9E /* NetworkSimulator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkSimulator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22E6E6361BFC258C00815B9E /* libcompression.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,6 +69,9 @@
 		22E6E61C1BFC233F00815B9E /* TiltShift */ = {
 			isa = PBXGroup;
 			children = (
+				22E6E6311BFC248000815B9E /* Utilities */,
+				22E6E6301BFC247800815B9E /* Operations */,
+				22E6E62F1BFC246F00815B9E /* View Controllers */,
 				22E6E61D1BFC233F00815B9E /* AppDelegate.swift */,
 				22E6E61F1BFC233F00815B9E /* ViewController.swift */,
 				22E6E6211BFC233F00815B9E /* Main.storyboard */,
@@ -62,6 +80,58 @@
 				22E6E6291BFC233F00815B9E /* Info.plist */,
 			);
 			path = TiltShift;
+			sourceTree = "<group>";
+		};
+		22E6E62F1BFC246F00815B9E /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		22E6E6301BFC247800815B9E /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				22E6E63C1BFC25D400815B9E /* TiltShiftOperation.swift */,
+			);
+			name = Operations;
+			sourceTree = "<group>";
+		};
+		22E6E6311BFC248000815B9E /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				22E6E63A1BFC25A800815B9E /* ImageFiltering */,
+				22E6E6391BFC25A000815B9E /* Networking */,
+				22E6E6321BFC257A00815B9E /* Compression */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		22E6E6321BFC257A00815B9E /* Compression */ = {
+			isa = PBXGroup;
+			children = (
+				22E6E6331BFC258C00815B9E /* libcompression.tbd */,
+				22E6E6341BFC258C00815B9E /* Compressor.swift */,
+				22E6E6351BFC258C00815B9E /* NSData+Compression.swift */,
+			);
+			name = Compression;
+			sourceTree = "<group>";
+		};
+		22E6E6391BFC25A000815B9E /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				22E6E6411BFC262E00815B9E /* NetworkSimulator.swift */,
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
+		22E6E63A1BFC25A800815B9E /* ImageFiltering */ = {
+			isa = PBXGroup;
+			children = (
+				22E6E63B1BFC25D400815B9E /* GradientGenerator.swift */,
+				22E6E63D1BFC25D400815B9E /* UIImageExtensions.swift */,
+			);
+			name = ImageFiltering;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -136,7 +206,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				22E6E6201BFC233F00815B9E /* ViewController.swift in Sources */,
+				22E6E63E1BFC25D400815B9E /* GradientGenerator.swift in Sources */,
+				22E6E6401BFC25D400815B9E /* UIImageExtensions.swift in Sources */,
+				22E6E6421BFC262E00815B9E /* NetworkSimulator.swift in Sources */,
+				22E6E6371BFC258C00815B9E /* Compressor.swift in Sources */,
+				22E6E63F1BFC25D400815B9E /* TiltShiftOperation.swift in Sources */,
 				22E6E61E1BFC233F00815B9E /* AppDelegate.swift in Sources */,
+				22E6E6381BFC258C00815B9E /* NSData+Compression.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +327,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = TiltShift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TiltShift",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.TiltShift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -262,6 +342,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = TiltShift/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TiltShift",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.TiltShift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -286,6 +370,7 @@
 				22E6E62E1BFC233F00815B9E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
