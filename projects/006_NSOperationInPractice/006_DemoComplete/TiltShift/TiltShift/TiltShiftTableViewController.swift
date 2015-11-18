@@ -22,11 +22,27 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    // Do any additional setup after loading the view, typically from a nib.
+class TiltShiftTableViewController: UITableViewController {
+  
+  let imageList = TiltShiftImage.loadDefaultData()
+  
+  // MARK: - Table view data source
+  override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    return 1
   }
+  
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return imageList.count
+  }
+  
+  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCellWithIdentifier("TiltShiftCell", forIndexPath: indexPath)
+    
+    if let cell = cell as? ImageTableViewCell {
+      
+    }
+  
+    return cell
+  }
+  
 }
-
