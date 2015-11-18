@@ -1,4 +1,5 @@
 import Compressor
+import UIKit
 //: # Compressor Operation
 //: You've decided that you want to use some funky new compression algorithm to store the images in your app. Unfortunately this compression algorithm isn't natively supported by `UIImage`, so you need to use your own custom Decompressor.
 //:
@@ -10,6 +11,26 @@ import Compressor
 
 let compressedFilePath = NSBundle.mainBundle().pathForResource("dark_road_small", ofType: "compressed")!
 
+class ImageDecompressor: NSOperation {
+  var inputPath: String?
+  var outputImage: UIImage?
+  
+  override func main() {
+    guard let inputPath = inputPath else { return }
+    
+    if let decompressedData = Compressor.loadCompressedFile(inputPath) {
+      outputImage = UIImage(data: decompressedData)
+    }
+  }
+}
 
+let decompOp = ImageDecompressor()
+decompOp.inputPath = compressedFilePath
+
+if(decompOp.ready) {
+  decompOp.start()
+}
+
+decompOp.outputImage
 
 
