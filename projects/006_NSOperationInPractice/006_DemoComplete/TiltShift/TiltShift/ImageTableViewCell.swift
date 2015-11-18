@@ -36,24 +36,50 @@ class ImageTableViewCell: UITableViewCell {
   }
   private var imageLoadOperation: LoadAndFilterImageOperation?
   
-  @IBOutlet var tsImageView: UIImageView!
-  @IBOutlet var titleLabel: UILabel!
+  @IBOutlet weak var tsImageView: UIImageView!
+  @IBOutlet weak var titleLabel: UILabel!
+  @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
   
   override func prepareForReuse() {
     imageLoadOperation?.cancel()
-    tsImageView.image = nil
+    self.setImage(nil)
   }
   
   private func loadImage(tsImage: TiltShiftImage) {
+    setImage(nil)
     imageLoadOperation?.cancel()
     let loadOp = LoadAndFilterImageOperation(imageName: tsImage.imageName) {
       image in
       NSOperationQueue.mainQueue().addOperationWithBlock {
-        self.tsImageView.image = image
+        self.setImage(image)
       }
     }
     imageLoadOperation = loadOp
     
     imageLoadQueue?.addOperation(loadOp)
   }
+  
+  private func setImage(image: UIImage?) {
+    if let image = image {
+      tsImageView.image = image
+      tsImageView.alpha = 0
+      UIView.animateWithDuration(0.3, animations: {
+        self.tsImageView.alpha = 1.0
+        self.activityIndicator.alpha = 0
+      }, completion: {
+        _ in
+        self.activityIndicator.stopAnimating()
+      })
+      
+    } else {
+      tsImageView.image = nil
+      tsImageView.alpha = 0
+      activityIndicator.alpha = 1.0
+      activityIndicator.startAnimating()
+    }
+  }
 }
+
+
+
+
