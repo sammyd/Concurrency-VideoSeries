@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2280BCB21BFD563C00CCDBD1 /* PostProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2280BCB11BFD563C00CCDBD1 /* PostProcess.swift */; };
-		2280BCB41BFD5A4900CCDBD1 /* PostProcessImageOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2280BCB31BFD5A4900CCDBD1 /* PostProcessImageOperation.swift */; };
 		2280BCB61BFD5B4D00CCDBD1 /* ImageFilterOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2280BCB51BFD5B4D00CCDBD1 /* ImageFilterOperation.swift */; };
 		2280BCB81BFD5DF200CCDBD1 /* ImageFilterOutputOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2280BCB71BFD5DF200CCDBD1 /* ImageFilterOutputOperation.swift */; };
 		2280BCC21BFD641300CCDBD1 /* sample_01_small.compressed in Resources */ = {isa = PBXBuildFile; fileRef = 2280BCB91BFD641300CCDBD1 /* sample_01_small.compressed */; };
@@ -43,7 +42,6 @@
 
 /* Begin PBXFileReference section */
 		2280BCB11BFD563C00CCDBD1 /* PostProcess.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostProcess.swift; sourceTree = "<group>"; };
-		2280BCB31BFD5A4900CCDBD1 /* PostProcessImageOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostProcessImageOperation.swift; sourceTree = "<group>"; };
 		2280BCB51BFD5B4D00CCDBD1 /* ImageFilterOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageFilterOperation.swift; sourceTree = "<group>"; };
 		2280BCB71BFD5DF200CCDBD1 /* ImageFilterOutputOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageFilterOutputOperation.swift; sourceTree = "<group>"; };
 		2280BCB91BFD641300CCDBD1 /* sample_01_small.compressed */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_01_small.compressed; sourceTree = "<group>"; };
@@ -134,7 +132,6 @@
 			children = (
 				22E6E6471BFC52A100815B9E /* Abstract */,
 				22E6E63C1BFC25D400815B9E /* TiltShiftOperation.swift */,
-				2280BCB31BFD5A4900CCDBD1 /* PostProcessImageOperation.swift */,
 				2280BCB71BFD5DF200CCDBD1 /* ImageFilterOutputOperation.swift */,
 				22E6E6431BFC4C8500815B9E /* DataLoadOperation.swift */,
 				22E6E6481BFC534900815B9E /* ImageDecompressionOperation.swift */,
@@ -334,7 +331,6 @@
 				22E6E6441BFC4C8500815B9E /* DataLoadOperation.swift in Sources */,
 				22E6E6461BFC4DA600815B9E /* ConcurrentOperation.swift in Sources */,
 				2280BCCC1BFD64D700CCDBD1 /* NSOperationExtensions.swift in Sources */,
-				2280BCB41BFD5A4900CCDBD1 /* PostProcessImageOperation.swift in Sources */,
 				22E6E63E1BFC25D400815B9E /* GradientGenerator.swift in Sources */,
 				2280BCB61BFD5B4D00CCDBD1 /* ImageFilterOperation.swift in Sources */,
 				22E6E6401BFC25D400815B9E /* UIImageExtensions.swift in Sources */,

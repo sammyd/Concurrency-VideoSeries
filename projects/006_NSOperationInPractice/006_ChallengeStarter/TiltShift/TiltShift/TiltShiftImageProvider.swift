@@ -36,13 +36,12 @@ class TiltShiftImageProvider {
     let dataLoad = DataLoadOperation(url: url)
     let imageDecompress = ImageDecompressionOperation(data: nil)
     let tiltShift = TiltShiftOperation(image: nil)
-    let postprocess = PostProcessImageOperation(image: nil)
     let filterOutput = ImageFilterOutputOperation(completion: completion)
     
-    let operations = [dataLoad, imageDecompress, tiltShift, postprocess, filterOutput]
+    let operations = [dataLoad, imageDecompress, tiltShift, filterOutput]
     
     // Add operation dependencies
-    dataLoad |> imageDecompress |> tiltShift |> postprocess |> filterOutput
+    dataLoad |> imageDecompress |> tiltShift |> filterOutput
     
     operationQueue.addOperations(operations, waitUntilFinished: false)
   }
