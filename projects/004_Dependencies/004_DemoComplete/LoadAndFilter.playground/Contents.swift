@@ -16,12 +16,7 @@ class ImageDecompressionOperation: NSOperation {
   var outputImage: UIImage?
   
   override func main() {
-    if let dependencyData = dependencies
-      .filter({ $0 is ImageDecompressionOperationDataProvider })
-      .first as? ImageDecompressionOperationDataProvider
-      where inputData == .None {
-      inputData = dependencyData.compressedData
-    }
+    // TODO: Find out whether a dependency has input data if we don't
     guard let inputData = inputData else { return }
     
     if let decompressedData = Compressor.decompressData(inputData) {
@@ -50,21 +45,11 @@ class DataLoadOperation: ConcurrentOperation {
 }
 
 //: Dependency data transfer
-protocol ImageDecompressionOperationDataProvider {
-  var compressedData: NSData? { get }
-}
-
-extension DataLoadOperation: ImageDecompressionOperationDataProvider {
-  var compressedData: NSData? { return loadedData }
-}
+// TODO: Transfer data between dependent operations
 
 
 //: Showing off with custom operators
-infix operator |> { associativity left precedence 160 }
-func |>(lhs: NSOperation, rhs: NSOperation) -> NSOperation {
-  rhs.addDependency(lhs)
-  return rhs
-}
+// TODO create custom dependency operator
 
 
 //: Create the queue with the default constructor
@@ -82,9 +67,7 @@ for compressedFile in compressedFilePaths {
     decompressedImages.append(output)
   }
   
-  loadingOperation |> decompressionOp
-  
-  queue.addOperations([loadingOperation, decompressionOp], waitUntilFinished: false)
+  // TODO: Link and enqueue these operations
 }
 
 //: Need to wait for the queue to finish before checking the results
