@@ -53,7 +53,9 @@ extension TiltShiftTableViewController {
     guard let cell = cell as? ImageTableViewCell else { return }
     let imageProvider = TiltShiftImageProvider(tiltShiftImage: imageList[indexPath.row]) {
       image in
-      cell.updateImageViewWithImage(image)
+      NSOperationQueue.mainQueue().addOperationWithBlock {
+        cell.updateImageViewWithImage(image)
+      }
     }
     imageProviders.insert(imageProvider)
   }
