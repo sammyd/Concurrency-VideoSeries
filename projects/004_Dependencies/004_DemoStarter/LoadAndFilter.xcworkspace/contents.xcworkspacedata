@@ -5,6 +5,6 @@
       location = "group:Compressor/Compressor.xcodeproj">
    </FileRef>
    <FileRef
-      location = "container:">
+      location = "group:LoadAndFilter.playground">
    </FileRef>
 </Workspace>
