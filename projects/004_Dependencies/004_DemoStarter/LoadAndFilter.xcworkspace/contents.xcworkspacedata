@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:Compressor/Compressor.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/sam/dev/razeware/videos/ConcurrentProgramming/projects/004_Dependencies/004_DemoComplete/LoadAndFilter.playground">
+   </FileRef>
+</Workspace>
