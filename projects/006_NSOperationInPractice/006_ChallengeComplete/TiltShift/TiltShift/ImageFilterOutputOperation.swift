@@ -22,12 +22,16 @@
 
 import UIKit
 
-class TiltShiftOperation : ImageFilterOperation {
+class ImageFilterOutputOperation: ImageFilterOperation {
+  
+  private let completion: (UIImage?) -> ()
+  
+  init(completion: (UIImage?) -> ()) {
+    self.completion = completion
+    super.init(image: nil)
+  }
   
   override func main() {
-    guard let inputImage = filterInput else { return }
-    
-    let mask = topAndBottomGradient(inputImage.size)
-    filterOutput = inputImage.applyBlurWithRadius(16, maskImage: mask)
+    completion(filterInput)
   }
 }

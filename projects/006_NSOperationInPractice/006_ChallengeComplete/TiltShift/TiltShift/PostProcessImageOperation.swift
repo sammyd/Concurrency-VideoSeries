@@ -20,14 +20,13 @@
 * THE SOFTWARE.
 */
 
-import UIKit
+import Foundation
 
-class TiltShiftOperation : ImageFilterOperation {
+class PostProcessImageOperation: ImageFilterOperation {
   
   override func main() {
     guard let inputImage = filterInput else { return }
     
-    let mask = topAndBottomGradient(inputImage.size)
-    filterOutput = inputImage.applyBlurWithRadius(16, maskImage: mask)
+    filterOutput = postProcessImage(inputImage)
   }
 }
