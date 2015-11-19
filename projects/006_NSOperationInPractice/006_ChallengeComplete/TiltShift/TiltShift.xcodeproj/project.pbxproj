@@ -20,6 +20,7 @@
 		2280BCC81BFD641300CCDBD1 /* sample_07_small.compressed in Resources */ = {isa = PBXBuildFile; fileRef = 2280BCBF1BFD641300CCDBD1 /* sample_07_small.compressed */; };
 		2280BCC91BFD641300CCDBD1 /* sample_08_small.compressed in Resources */ = {isa = PBXBuildFile; fileRef = 2280BCC01BFD641300CCDBD1 /* sample_08_small.compressed */; };
 		2280BCCA1BFD641300CCDBD1 /* sample_09_small.compressed in Resources */ = {isa = PBXBuildFile; fileRef = 2280BCC11BFD641300CCDBD1 /* sample_09_small.compressed */; };
+		2280BCCC1BFD64D700CCDBD1 /* NSOperationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2280BCCB1BFD64D700CCDBD1 /* NSOperationExtensions.swift */; };
 		22E6E61E1BFC233F00815B9E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E6E61D1BFC233F00815B9E /* AppDelegate.swift */; };
 		22E6E6231BFC233F00815B9E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22E6E6211BFC233F00815B9E /* Main.storyboard */; };
 		22E6E6251BFC233F00815B9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22E6E6241BFC233F00815B9E /* Assets.xcassets */; };
@@ -54,6 +55,7 @@
 		2280BCBF1BFD641300CCDBD1 /* sample_07_small.compressed */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_07_small.compressed; sourceTree = "<group>"; };
 		2280BCC01BFD641300CCDBD1 /* sample_08_small.compressed */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_08_small.compressed; sourceTree = "<group>"; };
 		2280BCC11BFD641300CCDBD1 /* sample_09_small.compressed */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_09_small.compressed; sourceTree = "<group>"; };
+		2280BCCB1BFD64D700CCDBD1 /* NSOperationExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSOperationExtensions.swift; sourceTree = "<group>"; };
 		22E6E61A1BFC233F00815B9E /* TiltShift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TiltShift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22E6E61D1BFC233F00815B9E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22E6E6221BFC233F00815B9E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				22E6E63A1BFC25A800815B9E /* ImageFiltering */,
 				22E6E6391BFC25A000815B9E /* Networking */,
 				22E6E6321BFC257A00815B9E /* Compression */,
+				2280BCCB1BFD64D700CCDBD1 /* NSOperationExtensions.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 				22E6E6971BFCD96600815B9E /* TiltShiftImageProvider.swift in Sources */,
 				22E6E6441BFC4C8500815B9E /* DataLoadOperation.swift in Sources */,
 				22E6E6461BFC4DA600815B9E /* ConcurrentOperation.swift in Sources */,
+				2280BCCC1BFD64D700CCDBD1 /* NSOperationExtensions.swift in Sources */,
 				2280BCB41BFD5A4900CCDBD1 /* PostProcessImageOperation.swift in Sources */,
 				22E6E63E1BFC25D400815B9E /* GradientGenerator.swift in Sources */,
 				2280BCB61BFD5B4D00CCDBD1 /* ImageFilterOperation.swift in Sources */,

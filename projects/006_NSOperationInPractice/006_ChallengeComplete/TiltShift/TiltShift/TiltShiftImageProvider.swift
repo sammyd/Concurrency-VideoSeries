@@ -47,10 +47,7 @@ class TiltShiftImageProvider {
     let operations = [dataLoad, imageDecompress, tiltShift, postprocess, filterOutput]
     
     // Add operation dependencies
-    imageDecompress.addDependency(dataLoad)
-    tiltShift.addDependency(imageDecompress)
-    postprocess.addDependency(tiltShift)
-    filterOutput.addDependency(postprocess)
+    dataLoad |> imageDecompress |> tiltShift |> postprocess |> filterOutput
     
     operationQueue.addOperations(operations, waitUntilFinished: false)
   }
