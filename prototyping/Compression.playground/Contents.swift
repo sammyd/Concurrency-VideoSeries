@@ -3,7 +3,7 @@ import XCPlayground
 import Compressor
 
 
-let filename = "sample_09"
+let filename = "sample_09_small"
 
 let outputURL = XCPlaygroundSharedDataDirectoryURL.URLByAppendingPathComponent("\(filename).compressed")
 

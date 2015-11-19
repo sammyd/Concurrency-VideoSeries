@@ -28,6 +28,6 @@ class TiltShiftOperation : ImageFilterOperation {
     guard let inputImage = filterInput else { return }
     
     let mask = topAndBottomGradient(inputImage.size)
-    filterOutput = inputImage.applyBlurWithRadius(16, maskImage: mask)
+    filterOutput = inputImage.applyBlurWithRadius(5, maskImage: mask)
   }
 }

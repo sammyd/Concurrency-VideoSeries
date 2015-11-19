@@ -34,7 +34,7 @@ struct NetworkSimulator {
   
   static func syncLoadDataAtURL(url: NSURL) -> NSData? {
     // Wait somewhere between 0 and 3 seconds
-    let randomWaitingTime = arc4random_uniform(3 * 1000000)
+    let randomWaitingTime = arc4random_uniform(2 * 1000000)
     usleep(randomWaitingTime)
     return NSData(contentsOfURL: url)
   }
