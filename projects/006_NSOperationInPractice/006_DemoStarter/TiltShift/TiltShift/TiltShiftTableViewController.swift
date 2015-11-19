@@ -25,7 +25,6 @@ import UIKit
 class TiltShiftTableViewController: UITableViewController {
   
   let imageList = TiltShiftImage.loadDefaultData()
-  var imageProviders = Set<TiltShiftImageProvider>()
   
   // MARK: - Table view data source
   override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -40,31 +39,14 @@ class TiltShiftTableViewController: UITableViewController {
     let cell = tableView.dequeueReusableCellWithIdentifier("TiltShiftCell", forIndexPath: indexPath)
     
     if let cell = cell as? ImageTableViewCell {
+      let tsImage = imageList[indexPath.row]
+      let imageProvider = TiltShiftImageProvider(tiltShiftImage: tsImage)
+      
       cell.tiltShiftImage = imageList[indexPath.row]
+      cell.updateImageViewWithImage(imageProvider.image)
     }
   
     return cell
   }
-  
 }
 
-extension TiltShiftTableViewController {
-  override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-    guard let cell = cell as? ImageTableViewCell else { return }
-    let imageProvider = TiltShiftImageProvider(tiltShiftImage: imageList[indexPath.row]) {
-      image in
-      NSOperationQueue.mainQueue().addOperationWithBlock {
-        cell.updateImageViewWithImage(image)
-      }
-    }
-    imageProviders.insert(imageProvider)
-  }
-  
-  override func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-    guard let cell = cell as? ImageTableViewCell else { return }
-    for provider in imageProviders.filter({ $0.tiltShiftImage == cell.tiltShiftImage }) {
-      provider.cancel()
-      imageProviders.remove(provider)
-    }
-  }
-}

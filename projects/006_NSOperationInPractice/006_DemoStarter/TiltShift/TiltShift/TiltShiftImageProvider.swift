@@ -24,31 +24,23 @@ import UIKit
 
 class TiltShiftImageProvider {
   
-  private let operationQueue = NSOperationQueue()
   let tiltShiftImage: TiltShiftImage
   
-  init(tiltShiftImage: TiltShiftImage, completion: (UIImage?) -> ()) {
+  init(tiltShiftImage: TiltShiftImage) {
     self.tiltShiftImage = tiltShiftImage
-    
-    let url = NSBundle.mainBundle().URLForResource(tiltShiftImage.imageName, withExtension: "compressed")!
-    
-    // Create the separate operations
-    let dataLoad = DataLoadOperation(url: url)
-    let imageDecompress = ImageDecompressionOperation(data: nil)
-    let tiltShift = TiltShiftOperation(image: nil)
-    let filterOutput = ImageFilterOutputOperation(completion: completion)
-    
-    let operations = [dataLoad, imageDecompress, tiltShift, filterOutput]
-    
-    // Add operation dependencies
-    dataLoad |> imageDecompress |> tiltShift |> filterOutput
-    
-    operationQueue.addOperations(operations, waitUntilFinished: false)
   }
   
-  func cancel() {
-    operationQueue.cancelAllOperations()
+  var image: UIImage? {
+    let url = NSBundle.mainBundle().URLForResource(tiltShiftImage.imageName, withExtension: "compressed")!
+    
+    guard let rawData = NetworkSimulator.syncLoadDataAtURL(url),
+      let decompressedData = Compressor.decompressData(rawData),
+      let inputImage = UIImage(data: decompressedData) else { return .None }
+    
+    let mask = topAndBottomGradient(inputImage.size)
+    return inputImage.applyBlurWithRadius(5, maskImage: mask)
   }
+  
 }
 
 extension TiltShiftImageProvider: Hashable {
