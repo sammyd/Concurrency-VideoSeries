@@ -7,7 +7,7 @@ import UIKit
 let compressedFilePaths = ["01", "02", "03", "04", "05"].map {
   NSBundle.mainBundle().URLForResource("sample_\($0)_small", withExtension: "compressed")
 }
-var decompressedImages = [UIImage]()
+var filteredImages = [UIImage]()
 
 
 //: `ImageDecompressionOperation` is familiar
@@ -58,6 +58,26 @@ extension DataLoadOperation: ImageDecompressionOperationDataProvider {
   var compressedData: NSData? { return loadedData }
 }
 
+//: `TiltShiftOperation` is another familiar operation
+class TiltShiftOperation : NSOperation {
+  var inputImage: UIImage?
+  var outputImage: UIImage?
+  
+  override func main() {
+    // TODO: Update the input image location to check for input from dependencies
+    
+    guard let inputImage = inputImage else { return }
+    let mask = topAndBottomGradient(inputImage.size)
+    outputImage = inputImage.applyBlurWithRadius(4, maskImage: mask)
+  }
+}
+
+
+//: Image filter input data transfer
+protocol ImageFilterDataProvider {
+  // TODO: Fill this in
+}
+
 
 //: Showing off with custom operators
 infix operator |> { associativity left precedence 160 }
@@ -74,12 +94,13 @@ let queue = NSOperationQueue()
 for compressedFile in compressedFilePaths {
   guard let inputURL = compressedFile else { continue }
   
-  let loadingOperation = DataLoadOperation(url: inputURL)
   
+  // TODO: Update the operation graph to add filtering
+  let loadingOperation = DataLoadOperation(url: inputURL)
   let decompressionOp = ImageDecompressionOperation()
   decompressionOp.completionBlock = {
     guard let output = decompressionOp.outputImage else { return }
-    decompressedImages.append(output)
+    filteredImages.append(output)
   }
   
   loadingOperation |> decompressionOp
@@ -90,7 +111,7 @@ for compressedFile in compressedFilePaths {
 //: Need to wait for the queue to finish before checking the results
 queue.waitUntilAllOperationsAreFinished()
 
-//: Inspect the decompressed images
-decompressedImages
+//: Inspect the filtered images
+filteredImages
 
 
