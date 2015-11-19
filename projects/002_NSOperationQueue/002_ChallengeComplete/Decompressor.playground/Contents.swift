@@ -1,16 +1,9 @@
 import Compressor
 import UIKit
 //: # Compressor Operation
-//: You've decided that you want to use some funky new compression algorithm to store the images in your app. Unfortunately this compression algorithm isn't natively supported by `UIImage`, so you need to use your own custom Decompressor.
-//:
-//: Decompression is a fairly expensive process, so you'd like to be able to wrap it in an `NSOperation` and eventually have the images decompressing in the background.
-//:
-//: The `Compressor` struct accessible within this playground has a decompression function on it that will take a path to a file and return the decompressed `NSData`
-//: 
-//: > __Challenge:__ Your challenge is to create an `NSOperation` subclass that decompresses a file. Use __dark\_road\_small.compressed__ as a test file.
+//: Continuing from the challenge in the previous video, your challenge for this video is to use an `NSOperationQueue` to decompress a collection of compressed images.
 
-let compressedFilePath = NSBundle.mainBundle().pathForResource("dark_road_small", ofType: "compressed")!
-
+//: The `ImageDecompressor` class is as before
 class ImageDecompressor: NSOperation {
   var inputPath: String?
   var outputImage: UIImage?
@@ -24,13 +17,32 @@ class ImageDecompressor: NSOperation {
   }
 }
 
-let decompOp = ImageDecompressor()
-decompOp.inputPath = compressedFilePath
+//: The following two arrays represent the input and output collections:
+let compressedFilePaths = ["01", "02", "03", "04", "05"].map {
+  NSBundle.mainBundle().pathForResource("sample_\($0)_small", ofType: "compressed")
+}
+var decompressedImages = [UIImage]()
 
-if(decompOp.ready) {
-  decompOp.start()
+//: Create your implementation here:
+
+//: Create the queue with the default constructor
+let decompressionQueue = NSOperationQueue()
+
+//: Create a filter operations for each of the iamges, adding a completionBlock
+for compressedFile in compressedFilePaths {
+  let decompressionOp = ImageDecompressor()
+  decompressionOp.inputPath = compressedFile
+  decompressionOp.completionBlock = {
+    guard let output = decompressionOp.outputImage else { return }
+    decompressedImages.append(output)
+  }
+  decompressionQueue.addOperation(decompressionOp)
 }
 
-decompOp.outputImage
+//: Need to wait for the queue to finish before checking the results
+decompressionQueue.waitUntilAllOperationsAreFinished()
+
+//: Inspect the decompressed images
+decompressedImages
 
 
