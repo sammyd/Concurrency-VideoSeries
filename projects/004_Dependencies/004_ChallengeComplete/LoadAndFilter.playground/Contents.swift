@@ -20,7 +20,7 @@ class ImageDecompressionOperation: NSOperation {
       .filter({ $0 is ImageDecompressionOperationDataProvider })
       .first as? ImageDecompressionOperationDataProvider
       where inputData == .None {
-      inputData = dependencyData.compressedData
+        inputData = dependencyData.compressedData
     }
     guard let inputData = inputData else { return }
     
@@ -64,7 +64,12 @@ class TiltShiftOperation : NSOperation {
   var outputImage: UIImage?
   
   override func main() {
-    // TODO: Update the input image location to check for input from dependencies
+    if let imageProvider = dependencies
+      .filter({ $0 is ImageFilterDataProvider })
+      .first as? ImageFilterDataProvider
+      where inputImage == .None {
+        inputImage = imageProvider.image
+    }
     
     guard let inputImage = inputImage else { return }
     let mask = topAndBottomGradient(inputImage.size)
@@ -75,9 +80,12 @@ class TiltShiftOperation : NSOperation {
 
 //: Image filter input data transfer
 protocol ImageFilterDataProvider {
-  // TODO: Fill this in
+  var image: UIImage? { get }
 }
 
+extension ImageDecompressionOperation: ImageFilterDataProvider {
+  var image: UIImage? { return outputImage }
+}
 
 //: Showing off with custom operators
 infix operator |> { associativity left precedence 160 }
@@ -94,18 +102,17 @@ let queue = NSOperationQueue()
 for compressedFile in compressedFilePaths {
   guard let inputURL = compressedFile else { continue }
   
-  
-  // TODO: Update the operation graph to add filtering
   let loadingOperation = DataLoadOperation(url: inputURL)
   let decompressionOp = ImageDecompressionOperation()
-  decompressionOp.completionBlock = {
-    guard let output = decompressionOp.outputImage else { return }
+  let filterOperation = TiltShiftOperation()
+  filterOperation.completionBlock = {
+    guard let output = filterOperation.outputImage else { return }
     filteredImages.append(output)
   }
   
-  loadingOperation |> decompressionOp
+  loadingOperation |> decompressionOp |> filterOperation
   
-  queue.addOperations([loadingOperation, decompressionOp], waitUntilFinished: false)
+  queue.addOperations([loadingOperation, decompressionOp, filterOperation], waitUntilFinished: false)
 }
 
 //: Need to wait for the queue to finish before checking the results
