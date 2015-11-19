@@ -15,22 +15,12 @@ let input = [(1,5), (5,8), (6,1), (3,9), (6,12), (1,0)]
 
 class SumOperation: ConcurrentOperation {
   
-  let lhs: Int
-  let rhs: Int
-  var result: Int?
-  
   init(lhs: Int, rhs: Int) {
-    self.lhs = lhs
-    self.rhs = rhs
     super.init()
   }
   
   override func main() {
-    asyncAdd(lhs, rhs: rhs) {
-      result in
-      self.result = result
-      self.state = .Finished
-    }
+
   }
 }
 
@@ -41,8 +31,8 @@ let queue = NSOperationQueue()
 for (lhs, rhs) in input {
   let operation = SumOperation(lhs: lhs, rhs: rhs)
   operation.completionBlock = {
-    guard let result = operation.result else { return }
-    print("\(lhs) + \(rhs) = \(result)")
+
+    print("\(lhs) + \(rhs) = ????")
   }
   queue.addOperation(operation)
 }
