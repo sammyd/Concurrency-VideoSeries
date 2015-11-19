@@ -22,18 +22,18 @@
 
 import Foundation
 
-public struct Compressor {
-  public static func loadCompressedFile(path: String) -> NSData? {
-    return NSData(contentsOfArchive: path, compression: .LZMA)
-  }
-  
-  public static func saveDataAsCompressedFile(data: NSData, path: String) -> Bool {
-    guard let compressedData = data.compressedDataUsingCompression(.LZMA) else { return false
+public struct NetworkSimulator {
+  public static func asyncLoadDataAtURL(url: NSURL, completion: ((data: NSData?) -> ())) {
+    NSOperationQueue().addOperationWithBlock {
+      let data = syncLoadDataAtURL(url)
+      completion(data: data)
     }
-    return compressedData.writeToFile(path, atomically: true)
   }
   
-  public static func decompressData(data: NSData) -> NSData? {
-    return data.uncompressedDataUsingCompression(.LZMA)
+  static func syncLoadDataAtURL(url: NSURL) -> NSData? {
+    // Wait somewhere between 0 and 3 seconds
+    let randomWaitingTime = arc4random_uniform(2 * 1000000)
+    usleep(randomWaitingTime)
+    return NSData(contentsOfURL: url)
   }
 }
