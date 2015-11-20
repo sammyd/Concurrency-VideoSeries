@@ -21,6 +21,7 @@ class SumOperation: NSOperation {
 }
 
 //: `GroupAdd` is a vanilla class that manages an operation queue and multiple `SumOperation`s to calculate the sum of all the pairs in the input array.
+//: > __TODO__: There are 3 places in this class that you need to add implementation
 class GroupAdd {
   let queue = NSOperationQueue()
   var outputArray = [(Int, Int, Int)]()
@@ -35,8 +36,7 @@ class GroupAdd {
     for pair in numberArray {
       let operation = SumOperation(input: pair)
       operation.completionBlock = {
-        guard let result = operation.output else { return }
-        self.outputArray.append((pair.0, pair.1, result))
+        // TODO: Implement this
       }
       queue.addOperation(operation)
     }
@@ -44,12 +44,10 @@ class GroupAdd {
   
   func start() {
     // TODO: implement this
-    queue.suspended = false
   }
   
   func cancel() {
     // TODO: implement this
-    queue.cancelAllOperations()
   }
   
   func wait() {
@@ -70,7 +68,7 @@ groupAdd.start()
 
 
 //: __TODO:__ Try uncommenting this call to `cancel()` to check that you've implemented it correctly. You should see the `stopClock()` result reduce, as should the length of the output.
-groupAdd.cancel()
+//groupAdd.cancel()
 
 groupAdd.wait()
 stopClock()
