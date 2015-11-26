@@ -10,19 +10,13 @@ XCPlaygroundPage.currentPage.needsIndefiniteExecution = true
 //: `dispatch_once()` is a low-level GCD API that allows you to specify a clouser that will be run just once.
 //:
 //: It requires a token to store the status of the block (i.e. has it been called before?)
-var onceToken: dispatch_once_t = 0
 
-func onceTest() {
-  dispatch_once(&onceToken) {
-    print("Performing setup the first time this is ever run")
-  }
-  print("Runs every time")
-}
 
-onceTest()
-onceTest()
-onceTest()
-onceTest()
+
+
+
+
+
 
 
 //: ### Threadsafe `lazy var`
@@ -60,14 +54,7 @@ sleep(5)
 //: There's a problem with this - the cache gets loaded twice
 
 class BetterCache {
-  private var onceToken: dispatch_once_t = 0
-  private var _store: [String : String]?
-  private var store: [String : String]? {
-    dispatch_once(&onceToken) {
-      self._store = self.loadStoreFromDisc()
-    }
-    return self._store
-  }
+  private lazy var store: [String : String]? = self.loadStoreFromDisc()
   
   func getValueForKey(key: String) -> String? {
     return store?[key]
