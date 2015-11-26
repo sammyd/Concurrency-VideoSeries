@@ -42,22 +42,8 @@ dispatch_group_wait(nameChangeGroup, DISPATCH_TIME_FOREVER)
 //: A barrier allows you add a task to a concurrent queue that will be run in a serial fashion. i.e. it will wait for the currently queued tasks to complete, and prevent any new ones starting.
 
 class ThreadSafePerson: Person {
-  
-  let isolationQueue = dispatch_queue_create("com.raywenderlich.person.isolation", DISPATCH_QUEUE_CONCURRENT)
-  
-  override func changeName(firstName firstName: String, lastName: String) {
-    dispatch_barrier_async(isolationQueue) {
-      super.changeName(firstName: firstName, lastName: lastName)
-    }
-  }
-  
-  override var name: String {
-    var result = ""
-    dispatch_sync(isolationQueue) {
-      result = super.name
-    }
-    return result
-  }
+  // TODO: Write this implementation
+
 }
 
 print("\n=== Threadsafe ===")
