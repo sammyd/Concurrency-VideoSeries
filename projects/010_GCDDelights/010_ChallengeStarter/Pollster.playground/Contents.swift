@@ -8,9 +8,7 @@ XCPlaygroundPage.currentPage.needsIndefiniteExecution = true
 
 class Pollster {
   let callback: (String) -> ()
-  private var active: Bool = false
-  private let isoloationQueue = dispatch_queue_create("com.raywenderlich.pollster.isolation", DISPATCH_QUEUE_SERIAL)
-  
+
   init(callback: (String) -> ()) {
     self.callback = callback
   }
@@ -18,25 +16,15 @@ class Pollster {
   
   func start() {
     print("Start polling")
-    active = true
-    dispatch_async(isoloationQueue) {
-      self.makeRequest()
-    }
+    
   }
   
   func stop() {
-    active = false
     print("Stop polling")
   }
   
   private func makeRequest() {
-    if active {
-      callback("\(NSDate())")
-      let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * 1))
-      dispatch_after(dispatchTime, isoloationQueue) {
-        self.makeRequest()
-      }
-    }
+    callback("\(NSDate())")
   }
 }
 
