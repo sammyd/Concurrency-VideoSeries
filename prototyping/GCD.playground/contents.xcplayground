@@ -3,5 +3,6 @@
     <pages>
         <page name='Queues'/>
         <page name='Groups'/>
+        <page name='Barriers'/>
     </pages>
 </playground>
