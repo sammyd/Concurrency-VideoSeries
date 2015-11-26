@@ -82,7 +82,7 @@ for name in nameList {
 
 dispatch_group_notify(threadSafeNameGroup, dispatch_get_main_queue()) {
   print("Final threadsafe name: \(threadSafePerson.name)")
-  XCPlaygroundPage.currentPage.finishExecution()
+  //XCPlaygroundPage.currentPage.finishExecution()
 }
 
 
@@ -91,8 +91,43 @@ dispatch_group_notify(threadSafeNameGroup, dispatch_get_main_queue()) {
 
 // Make the following threadsafe
 
+class Number {
+  var value: Int
+  var name: String
+  
+  init(value: Int, name: String) {
+    self.value = value
+    self.name = name
+  }
+  
+  func changeNumber(value: Int, name: String) {
+    randomDelay(0.1)
+    self.value = value
+    randomDelay(0.5)
+    self.name = name
+  }
+  
+  var number: String {
+    return "\(value) :: \(name)"
+  }
+}
 
+let numberGroup = dispatch_group_create()
+let numberArray = [(1, "one"), (2, "two"), (3, "three"), (4, "four"), (5, "five"), (6, "six")]
 
+let changingNumber = Number(value: 0, name: "zero")
+
+for pair in numberArray {
+  dispatch_group_async(numberGroup, workerQueue) {
+    changingNumber.changeNumber(pair.0, name: pair.1)
+    print("Current number: \(changingNumber.number)")
+  }
+}
+
+dispatch_group_notify(threadSafeNameGroup, dispatch_get_main_queue()) {
+  print("Final number: \(changingNumber.number)")
+  XCPlaygroundPage.currentPage.finishExecution()
+}
 
 
 
