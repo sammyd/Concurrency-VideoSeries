@@ -1,10 +1,10 @@
 NSOperation
 NSOperationQueue
+AsyncOperations
 Dependencies
 CancellingOperations
-AsyncOperations
 NSOperationInPractice
 FireAndForgetWithGCD
 GCDRelatedTasks
 ThreadSafetySharedResources
-DispatchBarrier
+GCDDelights
