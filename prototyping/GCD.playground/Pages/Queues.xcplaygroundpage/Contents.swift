@@ -1,3 +1,5 @@
+//: [Previous](@previous)
+
 import UIKit
 import XCPlayground
 
@@ -94,3 +96,8 @@ asyncSum((1,2)) {
 }
 
 print("=== End of File ===")
+
+
+
+
+//: [Next](@next)
