@@ -4,5 +4,6 @@
         <page name='Queues'/>
         <page name='Groups'/>
         <page name='Barriers'/>
+        <page name='OtherGuff'/>
     </pages>
 </playground>
