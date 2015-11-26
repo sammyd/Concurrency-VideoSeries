@@ -12,9 +12,12 @@ XCPlaygroundPage.currentPage.needsIndefiniteExecution = true
 
 extension UIView {
   static func animateWithDuration(duration: NSTimeInterval, animations: () -> Void, group: dispatch_group_t, completion: ((Bool) -> Void)?) {
-    
-  // TODO: Fill in this implementation
-  
+    dispatch_group_enter(group)
+    animateWithDuration(duration, animations: animations, completion: {
+      success in
+      completion?(success)
+      dispatch_group_leave(group)
+    })
   }
 }
 
@@ -33,23 +36,23 @@ XCPlaygroundPage.currentPage.liveView = view
 //: And then rewrite the following animation to be notified when all animations complete:
 UIView.animateWithDuration(1, animations: {
   box.center = CGPoint(x: 150, y: 150)
-  }, completion: {
+  }, group: animationGroup, completion: {
     _ in
     UIView.animateWithDuration(2, animations: {
       box.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_4))
-      }, completion: nil)
+      }, group: animationGroup, completion: nil)
 })
 
 UIView.animateWithDuration(4, animations: { () -> Void in
   view.backgroundColor = UIColor.blueColor()
-})
+}, group: animationGroup, completion: nil)
 
 
 //: Should only print once all the animations are complete
 dispatch_group_notify(animationGroup, dispatch_get_main_queue()) {
   print("Animations completed!")
-  // TODO: Uncomment the following line once you've completed implemention
-  //XCPlaygroundPage.currentPage.finishExecution()
+  //TODO: Uncomment the following line once you've completed implemention
+  XCPlaygroundPage.currentPage.finishExecution()
 }
 
 
