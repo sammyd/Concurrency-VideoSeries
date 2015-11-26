@@ -21,20 +21,18 @@ let resultQueue = dispatch_get_main_queue()
 print("=== Starting Async ===")
 
 //: __TODO__: Implement `asyncSum` function here:
-func asyncSum(input: (Int, Int), completionQueue: dispatch_queue_t, completion:(Int) -> ()) {
-  dispatch_async(workerQueue) {
-    let result = slowSum(input)
-    dispatch_async(completionQueue) {
-      completion(result)
-    }
-  }
-}
+
+
+
+
+
+
 
 //: __TODO__: Use `asyncSum` to calculate sum of two values. Remember to call `XCPlaygroundPlage.currentPage.finisheExecution()` in the completion handler.
-asyncSum((1,2), completionQueue: resultQueue) {
-  result in
-  print("ASYNC Result = \(result)")
-  XCPlaygroundPage.currentPage.finishExecution()
-}
+
+
+
+
+
 
 print("=== End of File ===")
