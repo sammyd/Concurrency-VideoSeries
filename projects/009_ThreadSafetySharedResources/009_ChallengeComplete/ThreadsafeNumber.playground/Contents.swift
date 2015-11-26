@@ -11,20 +11,28 @@ class Number {
   var value: Int
   var name: String
   
+  let isolationQueue = dispatch_queue_create("com.raywenderlich.number.isolation", DISPATCH_QUEUE_CONCURRENT)
+  
   init(value: Int, name: String) {
     self.value = value
     self.name = name
   }
   
   func changeNumber(value: Int, name: String) {
-    randomDelay(0.1)
-    self.value = value
-    randomDelay(0.5)
-    self.name = name
+    dispatch_barrier_async(isolationQueue) {
+      randomDelay(0.1)
+      self.value = value
+      randomDelay(0.5)
+      self.name = name
+    }
   }
   
   var number: String {
-    return "\(value) :: \(name)"
+    var result = ""
+    dispatch_sync(isolationQueue) {
+      result = "\(self.value) :: \(self.name)"
+    }
+    return result
   }
 }
 
