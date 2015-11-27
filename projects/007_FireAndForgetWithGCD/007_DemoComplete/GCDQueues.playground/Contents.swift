@@ -6,14 +6,15 @@ XCPlaygroundPage.currentPage.needsIndefiniteExecution = true
 //: # GCD Queues
 //: ## Using a Global Queue
 //: iOS has some global queues, where every task eventually ends up being executed. You can use these directly. You need to use the main queue for UI updates.
-let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+let queue = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)
 let mainQueue = dispatch_get_main_queue()
 
 //: ## Creating your own Queue
 //: Creating your own queues allow you to specify a label, which is super-useful for debugging.
 //: You can specify whether the queue is serieal (default) or concurrent (see later).
 //: You can also specify the QOS or priority (here be dragons)
-let workerQueue = dispatch_queue_create("com.raywenderlich.worker", DISPATCH_QUEUE_SERIAL)
+let attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INITIATED, 0)
+let workerQueue = dispatch_queue_create("com.raywenderlich.worker", attr)
 
 
 //: ## Getting the queue name
