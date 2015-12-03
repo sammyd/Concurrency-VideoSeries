@@ -1,4 +1,7 @@
 import Foundation
+import XCPlayground
+
+XCPlaygroundPage.currentPage.needsIndefiniteExecution = true
 //: # Operation Cancellation
 //: If you've got a long-running operation that you decide you no longer want to run, then you can cancel it using the `cancel()` method. But what does that actually do.
 //:
@@ -34,7 +37,7 @@ class AnotherArraySumOperation: NSOperation {
   override func main() {
     outputArray = slowAddArray(inputArray) {
       progress in
-      print("\(progress*100)% of the array processed.")
+      print("\(progress*100)% of the array processed")
       return !self.cancelled
     }
   }
@@ -51,11 +54,13 @@ let queue = NSOperationQueue()
 startClock()
 queue.addOperation(sumOperation)
 
-sumOperation.cancel()
+delay(3.5) {
+  sumOperation.cancel()
+}
 
-queue.waitUntilAllOperationsAreFinished()
-stopClock()
-
-//: Inspect the results
-sumOperation.outputArray
+sumOperation.completionBlock = {
+  stopClock()
+  sumOperation.outputArray
+  XCPlaygroundPage.currentPage.finishExecution()
+}
 
