@@ -1,7 +1,7 @@
 import Compressor
 import UIKit
-//: # Compressor Operation
-//: Continuing from the challenge in the previous video, your challenge for this video is to use an `NSOperationQueue` to decompress a collection of compressed images.
+//: # Dependencies
+//: You've now created operations for loading a file over a network, and decompressing a file into an image. These should work together - with the decompression happening only when the file has loaded. That's precisely what dependencies offer within `NSOperation`
 
 //: Input and output variables
 let compressedFilePaths = ["01", "02", "03", "04", "05"].map {
@@ -55,7 +55,7 @@ class DataLoadOperation: ConcurrentOperation {
 //: Create the queue with the default constructor
 let queue = NSOperationQueue()
 
-//: Create a filter operations for each of the iamges, adding a completionBlock
+//: Create operations for each of the compresed files, and set up dependencies
 for compressedFile in compressedFilePaths {
   guard let inputURL = compressedFile else { continue }
   
