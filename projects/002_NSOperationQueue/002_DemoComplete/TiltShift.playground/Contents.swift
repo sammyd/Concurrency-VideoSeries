@@ -1,7 +1,6 @@
 import UIKit
 import XCPlayground
 
-XCPlaygroundPage.currentPage.needsIndefiniteExecution = true
 //: # NSOperationQueue
 //: NSOperationQueue is responsible for scheduling and running a set of operations, somewhere in the background. 
 
