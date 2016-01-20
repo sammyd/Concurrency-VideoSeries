@@ -69,6 +69,8 @@ func |>(lhs: NSOperation, rhs: NSOperation) -> NSOperation {
 
 //: Create the queue with the default constructor
 let queue = NSOperationQueue()
+let appendQueue = NSOperationQueue()
+appendQueue.maxConcurrentOperationCount = 1
 
 //: Create operations for each of the compressed files and set up dependencies
 for compressedFile in compressedFilePaths {
@@ -79,7 +81,9 @@ for compressedFile in compressedFilePaths {
   let decompressionOp = ImageDecompressionOperation()
   decompressionOp.completionBlock = {
     guard let output = decompressionOp.outputImage else { return }
-    decompressedImages.append(output)
+    appendQueue.addOperationWithBlock {
+      decompressedImages.append(output)
+    }
   }
   
   loadingOperation |> decompressionOp

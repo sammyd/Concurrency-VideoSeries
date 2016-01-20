@@ -97,6 +97,8 @@ func |>(lhs: NSOperation, rhs: NSOperation) -> NSOperation {
 
 //: Create the queue with the default constructor
 let queue = NSOperationQueue()
+let appendQueue = NSOperationQueue()
+appendQueue.maxConcurrentOperationCount = 1
 
 //: Create a filter operations for each of the iamges, adding a completionBlock
 for compressedFile in compressedFilePaths {
@@ -107,7 +109,9 @@ for compressedFile in compressedFilePaths {
   let filterOperation = TiltShiftOperation()
   filterOperation.completionBlock = {
     guard let output = filterOperation.outputImage else { return }
-    filteredImages.append(output)
+    appendQueue.addOperationWithBlock {
+      filteredImages.append(output)
+    }
   }
   
   loadingOperation |> decompressionOp |> filterOperation
