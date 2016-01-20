@@ -40,5 +40,3 @@ for (lhs, rhs) in input {
 
 queue.waitUntilAllOperationsAreFinished()
 
-
-

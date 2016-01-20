@@ -23,5 +23,8 @@
 import Foundation
 
 public func asyncAdd(lhs: Int, rhs: Int, callback: (Int) -> ()) {
-  callback(lhs + rhs)
+  NSOperationQueue().addOperationWithBlock {
+    sleep(1)
+    callback(lhs + rhs)
+  }
 }
