@@ -23,11 +23,13 @@ class SumOperation: NSOperation {
 //: `GroupAdd` is a vanilla class that manages an operation queue and multiple `SumOperation`s to calculate the sum of all the pairs in the input array.
 class GroupAdd {
   let queue = NSOperationQueue()
+  let appendQueue = NSOperationQueue()
   var outputArray = [(Int, Int, Int)]()
   
   init(input: [(Int, Int)]) {
     queue.suspended = true
     queue.maxConcurrentOperationCount = 2
+    appendQueue.maxConcurrentOperationCount = 1
     generateOperations(input)
   }
   
@@ -36,7 +38,9 @@ class GroupAdd {
       let operation = SumOperation(input: pair)
       operation.completionBlock = {
         guard let result = operation.output else { return }
-        self.outputArray.append((pair.0, pair.1, result))
+        appendQueue.addOperationWithBlock {
+          self.outputArray.append((pair.0, pair.1, result))
+        }
       }
       queue.addOperation(operation)
     }

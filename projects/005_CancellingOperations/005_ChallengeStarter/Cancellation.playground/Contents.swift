@@ -25,10 +25,12 @@ class SumOperation: NSOperation {
 class GroupAdd {
   let queue = NSOperationQueue()
   var outputArray = [(Int, Int, Int)]()
+  let appendQueue = NSOperationQueue()
   
   init(input: [(Int, Int)]) {
     queue.suspended = true
     queue.maxConcurrentOperationCount = 2
+    appendQueue.maxConcurrentOperationCount = 1
     generateOperations(input)
   }
   
@@ -37,6 +39,8 @@ class GroupAdd {
       let operation = SumOperation(input: pair)
       operation.completionBlock = {
         // TODO: Implement this
+        // UPDATE: Ensure you append to the array on the appendQueue. This is different
+        //         to the video.
       }
       queue.addOperation(operation)
     }
