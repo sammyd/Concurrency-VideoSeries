@@ -27,6 +27,8 @@ var decompressedImages = [UIImage]()
 
 //: Create the queue with the default constructor
 let decompressionQueue = NSOperationQueue()
+let appendQueue = NSOperationQueue()
+appendQueue.maxConcurrentOperationCount = 1
 
 //: Create a filter operations for each of the iamges, adding a completionBlock
 for compressedFile in compressedFilePaths {
@@ -34,7 +36,9 @@ for compressedFile in compressedFilePaths {
   decompressionOp.inputPath = compressedFile
   decompressionOp.completionBlock = {
     guard let output = decompressionOp.outputImage else { return }
-    decompressedImages.append(output)
+    appendQueue.addOperationWithBlock {
+      decompressedImages.append(output)
+    }
   }
   decompressionQueue.addOperation(decompressionOp)
 }

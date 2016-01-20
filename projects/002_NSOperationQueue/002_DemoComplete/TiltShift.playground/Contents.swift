@@ -32,13 +32,18 @@ var filteredImages = [UIImage]()
 //: Create the queue with the default constructor
 let filterQueue = NSOperationQueue()
 
+// Create a serial queue to handle additions to the array
+let appendQueue = NSOperationQueue()
+appendQueue.maxConcurrentOperationCount = 1
 //: Create a filter operations for each of the iamges, adding a completionBlock
 for image in images {
   let filterOp = TiltShiftOperation()
   filterOp.inputImage = image
   filterOp.completionBlock = {
     guard let output = filterOp.outputImage else { return }
-    filteredImages.append(output)
+    appendQueue.addOperationWithBlock {
+      filteredImages.append(output)
+    }
   }
   filterQueue.addOperation(filterOp)
 }
